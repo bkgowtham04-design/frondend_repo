@@ -1,0 +1,26 @@
+.parent{
+    background-color: black;
+    color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   flex-wrap: 100px;
+   gap: 120px;
+   height: 100vh;
+
+
+}
+
+
+.box {
+    background-color: rgb(61, 150, 61);
+    color: rgb(18, 18, 175);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   flex-wrap: 100px;
+   gap: 20px;
+
+}
+
+

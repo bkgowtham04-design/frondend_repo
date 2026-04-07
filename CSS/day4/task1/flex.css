@@ -1,0 +1,68 @@
+*{
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+
+
+
+
+
+
+.container{
+    background-color: black;
+    color: burlywood;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+  
+   
+    height: 100vh;
+    width: 100%;
+    
+    
+    
+}
+
+
+.container img{
+    width: 400px;
+    height: 300px;
+    background-color: aliceblue;
+    color: brown;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center      ;
+
+}
+
+.image{
+
+    height: 625px;
+}
+
+.imagess{
+     height: 625px;
+
+}
+
+
+.child{
+    padding: 40px;
+     height: 700px;
+
+}
+
+
+
+
+
+
+
+
+

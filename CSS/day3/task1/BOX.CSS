@@ -1,0 +1,29 @@
+.boxx{
+    background-color: rgb(23, 12, 12);
+   
+    height: 100vh;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+ 
+
+    
+    
+
+}
+h1{ background-color: aqua;
+    color: blue;
+    
+    height: 300px;
+    width: 300px;
+    border: 10px yellow ;
+    display: flex;
+    font-size: large;
+    align-items: center;
+    justify-content: center;
+    
+
+
+}

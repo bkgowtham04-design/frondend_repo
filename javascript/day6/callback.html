@@ -1,0 +1,190 @@
+<script>
+    const process = () => {
+        console.log("processing....");
+        
+    }
+
+
+    const processs = () => {
+        console.log("processing js....");
+        
+    }
+
+
+    const main = (callback) => {
+        callback()
+    }
+
+    main((processs))
+
+
+
+    
+
+
+
+    
+
+
+const calculate = (a, b, callback) => {
+    return callback(a, b);
+};
+
+const add = (x, y) => x + y;
+
+console.log(calculate(5, 3, add)); // 8
+
+
+
+const checkNumber = (num, callback) => {
+    callback(num);
+};
+
+const isEven = (n) => {
+    if (n % 2 === 0) {
+        console.log("Even");
+    } else {
+        console.log("Odd");
+    }
+};
+
+checkNumber(6, isEven);
+
+
+
+const greet = (name, callback) => {
+    callback(name);
+};
+
+const welcome = (n) => {
+    console.log("Welcome Gowtham");
+};
+
+greet("Gowtham", welcome);
+
+
+
+
+
+
+
+
+const arr = [10, 20, 30];
+
+arr.forEach((value) => {
+    console.log(value);
+});
+
+
+
+
+
+
+
+
+
+
+
+// </script>
+
+
+
+
+
+
+
+
+// <script>
+
+
+function createCounter() {
+    let count = 0; 
+
+    return function () {
+        count++;          
+        return count;     
+    };
+}
+
+
+const counter = createCounter();
+
+console.log(counter()); 
+console.log(counter()); 
+console.log(counter()); 
+
+
+
+
+
+
+
+
+
+
+
+const multiplyy = (a) => {
+    return (b) => {
+        return a * b;
+    };
+};
+
+console.log(multiplyy(5)(10)); // 50
+
+
+
+
+
+
+
+
+
+const messageStore = (msg) => {
+    return () => {
+        console.log(msg);
+    };
+};
+
+const myMessage = messageStore("Hello World");
+myMessage();
+
+
+
+
+
+
+
+
+
+const userLogin = (username) => {
+    return () => {
+        console.log(`User ${username} logged in`);
+    };
+};
+
+const login = userLogin("Gowtham");
+login();
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+    
+
+
+    

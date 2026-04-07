@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+</head>
+<body>
+    
+
+
+
+    <h1 id="prints">IT IS A DOM MANUPULATION</h1>
+
+    <button id="btn">SEE MORE</button>
+
+
+    <button  onclick = "clickme()">THALAPATHY VIJAY</button>
+
+
+    <script>
+        //console.log(document);
+
+        const box = document.getElementById("prints")
+
+        console.log(box);
+
+        prints.style.color = "lightblue"
+
+         
+       
+
+
+        const newbtn = document.addEventListener("click",() => {
+              box.innerHTML = "IT IS NOT A DOM MANUPULATION"
+
+               box.style.color = "lightblue"
+
+               
+        })
+
+
+        const clickme = () => {
+             box.innerHTML = "IT IS NOT A DOM MANUPULATION"
+        }
+
+       
+
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,144 @@
+ <script>
+    const add = (something) => {
+        
+        console.log("this is callback");
+        
+    }
+
+     function name(callback) {
+        callback()
+        
+    }
+
+    name((add))
+
+
+    const sub = (toadd) => {
+        console.log(20);
+        
+        
+    }
+
+    
+    const mul = (toaddd) => {
+        console.log(10);
+        
+        
+    }
+
+
+    let a = 60;
+    let b = 20;
+
+
+
+
+    function loop(callback) {
+        
+        if(a >= b)
+        console.log("this is true");
+
+        else{
+            console.log("this is false");
+            
+        }
+        
+    }
+
+
+    loop((a,b))
+
+
+
+    let arrs = [10,90,80,50]
+
+
+    const array = arrs.reverse( )
+        
+    
+
+    console.log(array);
+
+
+
+
+    let myname = "Gowtham";
+
+    const names = myname.split("").reverse();
+
+
+    console.log(names);
+
+
+    let str = "madam";
+let rev = str.split("").reverse().join("");
+
+if (str === rev) {
+  console.log("Palindrome");
+} else {
+  console.log("Not Palindrome");
+}
+
+
+
+
+let ab = [10,98,67,69]
+
+let large = ab[0]
+
+
+for(let i = 0;i < ab.length;i++ ){
+
+      if(ab[i] > large){
+        large = ab[i]
+    }
+        
+}
+
+console.log(large);
+
+
+
+
+    const arr = [1,23,54,67,87,45,]
+
+    const find = arr.splice(0,4,1,2,34,55)
+
+    console.log(find);
+    console.log(arr);
+
+
+
+    for (let i = 1; i <= 10; i++) {
+  if (i % 2 === 0) {
+    console.log("Even:", i);
+  } else {
+    console.log("Odd:", i);
+  }
+}
+
+
+
+
+
+
+    
+    
+    
+
+
+
+
+
+    
+    
+
+
+
+
+
+    
+
+
+</script> 
+

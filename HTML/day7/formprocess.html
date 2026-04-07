@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sla institute</title>
+</head>
+<body>
+    <center>
+        <h1>Student Registration Form</h1>
+
+    <form >  
+       <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="email" name="email"></td>
+        </tr>
+        <tr>
+            <td>Phone:</td>
+            <td><input type="tel" name="phone"></td>
+        </tr>
+        <tr>
+            <td> Address:</td>
+            <td><textarea name="address"></textarea></td>
+        </tr>
+        <tr>
+            <td>Gender:</td>
+            <td>
+                <input type="radio" name="gender" value="male"> Male
+                <input type="radio" name="gender" value="female"> Female
+            </td>
+        </tr>
+        <tr>
+            <td>  <label>Education Level:</label>   </td>
+
+          
+               
+
+           
+            <td>
+                <input type="checkbox" name="education" value="highschool"> High School
+                <input type="checkbox" name="education" value="bachelor"> Bachelor's Degree
+                <input type="checkbox" name="education" value="master"> Master's Degree
+            </td>
+          
+            
+        </tr>
+
+        <td><label>Select Your Course:</label></td>
+        <td><select name="course" placeholder="Choose a course">
+            <option value=""selected disabled placeholder="select your course"> select your course</option>
+            <option value="webdevelopment">Web Development</option>
+            <option value="dataanalytics">Data Analytics</option>
+            <option value="devops">DevOps</option>
+             <option value="cybersecurity">Cyber Security</option></td>
+
+             <tr> 
+                <td>
+                    <label>Class Mode:</label>
+                <td>
+                  
+                    <input type="radio" name="classmode" value="online"> Online 
+                    <input type="radio" name="classmode" value="offline"> Offline
+
+                </td>
+                   
+                </td>
+             </tr>
+
+             <tr>
+                <td>
+                    
+                    <input type="submit" value="Submit">
+                    <input type="reset" value="Reset">
+
+                   
+
+                </td>
+            </tr>
+
+            <br>
+
+
+
+
+           <div>
+            <br>
+            <table border="7">
+
+
+
+                <br>
+                <br>
+                <br>
+                <br>    
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Gender</th>
+                        <th>Education Level</th>
+                        <th>Course</th>
+                        <th>Class Mode</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dharani</td>
+                        <td>dharani@example.com</td>
+                        <td>1234567890</td>
+                        <td>123 Main St, City</td>
+                        <td>male</td>
+                        <td>Bachelor's Degree</td>
+                        <td>devops</td>
+                        <td>offline</td>
+
+                    </tr>
+            </table>
+           
+           </div>
+        
+        
+           
+
+
+        </select>
+       </table>
+    </form>
+    </center>
+    
+</body>
+</html>

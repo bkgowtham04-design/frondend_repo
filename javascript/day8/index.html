@@ -1,0 +1,186 @@
+<script>
+    const double = [1,2,3,4]
+
+    const rdouble = double.map ((e,i) => e*2)
+
+    console.log(rdouble);
+
+
+     const change = [1,2,3]
+
+    const ccange = change.map ((e,i) => String(e) )
+        
+    
+
+    console.log(ccange);
+
+
+
+    
+     const add = ["apple","banana"]
+
+    const aadd = add.map ((add) => "fruits: " + add)
+        
+    
+
+    console.log(aadd);
+
+
+
+
+    const even = [1,2,3,4,5,6]
+
+    const eeven = even.filter((e,i) => e % 2 === 0)
+
+
+    console.log(eeven);
+
+
+
+    const five = [10,60,30,80]
+
+    const ffive = five.filter((e,i) => e > 50)
+
+
+    console.log(ffive);
+
+
+    const name = ["Ram","Ravi","John"]
+
+    const  nname = name.filter((e, i) => e.startsWith("R"));
+
+    console.log(nname);
+
+
+
+    const high = [10,20,30,40]
+
+
+    const hhigh = high.find((e,i) => e > 25)
+
+
+    console.log(hhigh);
+
+
+
+    const users = [ 30,40,10,15,70,67,54];
+
+   
+const uusers = users.find((e,i) => e > 25)
+
+
+console.log(uusers);
+
+
+let arr = [1, 2, 3, 4];
+
+let resultss = arr.reduce((acc, e, i) => acc + e, 0);
+
+
+console.log(resultss);
+
+
+
+
+const me = [1,3,5,6]
+
+const mme = me.some((e,i) => e % 2==0 )
+
+
+console.log(mme);
+
+
+const userage = [21,90,25,13]
+
+
+const uuserage = userage.some((e,i) => e < 18)
+
+console.log(uuserage);
+
+
+const alleven = [2,4,6]
+
+const aalleven = alleven.every((e,i) => e % 2 ===0)
+
+console.log(aalleven);
+
+
+
+const mark = [30,80,90,76,50,88]
+
+
+
+const mmark = mark.every((e,i) => e > 40)
+
+
+console.log(mmark);
+
+
+
+const loop = [10,20,30  ]
+
+loop.forEach((e,i) => { 
+    console.log(e);
+    
+})
+
+
+const lop = [1,2,3,4 ]
+ sum = 0
+lop.forEach((e,i) => { 
+   sum += e
+    
+})
+
+ console.log(sum);
+
+
+
+ const products = [
+    { name: "Mobile", price: 8000 },
+    { name: "Charger", price: 500 },
+    { name: "Laptop", price: 50000 }
+];
+
+const result = products.filter((e, i) => e.price > 1000);
+
+console.log(result);
+
+
+
+const userss = [
+    { name: "Ram", age: 20 },
+    { name: "Ravi", age: 25 }
+];
+
+const results = userss.map((e, i) => e.name);
+
+console.log(results);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+    
+</script>

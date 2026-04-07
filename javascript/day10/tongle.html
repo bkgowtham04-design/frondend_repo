@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tongle</title>
+</head>
+<body>
+
+    <button onclick="handleclick()">PEAK CINEMA</button>
+
+<div id="movie" style="display: none; background-color: rgb(26, 56, 56); color: black; padding: 10px; margin: 10px; border-radius: 20px; width: 70%; height: 60%; display: none; align-items: center; justify-content: center;">
+    <h1>BREAKING BAD</h1>
+</div>
+
+<script>
+const handleclick = () => {
+
+
+
+    
+    const me = document.getElementById("movie");
+
+
+
+
+    if (me.style.display === "none") {
+       
+       
+       
+       
+        me.style.display = "flex";
+    } 
+    
+    else {
+       
+       
+       
+        me.style.display = "none";
+    }
+}
+</script>
+    
+</body>
+</html>

@@ -1,0 +1,19 @@
+.container{
+    background-color: rgba(6, 34, 52, 0.247);
+ 
+    display: grid;
+    grid-template-columns:repeat(3, 1fr);
+
+    padding: 200px;
+    
+    height: 100vh;
+    gap: 10px;
+   
+}
+
+
+.container img{
+    width: 300px;
+    height: 300px;
+
+}
