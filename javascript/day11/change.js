@@ -29,6 +29,9 @@ greenbtn.addEventListener("click",()=>{
 bluebtn.addEventListener("click",()=>{
     change.style.backgroundColor = "blue"
     change.innerHTML = "Blue"
+
+
+    
     
 
 })
