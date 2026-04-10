@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+  <h2>Login Page</h2>
+
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="Enter username" >
+    <input type="password" id="password" placeholder="Enter password" >
+
+    <button type="submit">Login</button>
+
+    <button id="btn" onclick="login()">Register</button>
+
+   
+  </form>
+
+   
+
+  <p id="error" style="color:red;"></p>
+
+  <script>
+
+
+const button = document.getElementById("btn")
+
+
+ button.addEventListener("click",()=>{
+  window.location.href ="register.html"
+ })
+
+ console.log("button");
+ 
+
+
+
+
+
+
+
+    const form = document.getElementById("loginForm")
+
+
+        
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault(); 
+
+      const user = document.getElementById("username").value
+
+
+
+
+
+
+         const pass = document.getElementById("password").value
+
+
+  
+
+    
+      if(user === "gowtham" && pass === "1818") {
+       
+        localStorage.setItem("isLoggedIn", "true")
+
+      
+        window.location.href = "dashboard.html"
+      } else {
+
+
+
+
+        document.getElementById("error").innerText = "Invalid Login"
+      }
+    })
+  </script>
+
+</body>
+</html>
