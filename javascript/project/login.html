@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YHAM — Enter the Worlds</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Raleway:wght@200;300;400;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #010714;
+    --deep: #020d24;
+    --neon-cyan: #00f5ff;
+    --neon-violet: #7b2fff;
+    --neon-gold: #ffd700;
+    --aurora-green: #00ff9d;
+    --star-white: #e8f4fd;
+    --mist: rgba(0,245,255,0.08);
+    --glass: rgba(1,10,30,0.7);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Raleway', sans-serif;
+    background: var(--void);
+    color: var(--star-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ── STARFIELD ── */
+  #starfield {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 20% 50%, #0a1628 0%, var(--void) 60%),
+                radial-gradient(ellipse at 80% 20%, #0d0a2e 0%, transparent 50%);
+  }
+
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    animation: twinkle var(--d) ease-in-out infinite alternate;
+  }
+
+  @keyframes twinkle {
+    from { opacity: var(--min-op); transform: scale(1); }
+    to   { opacity: 1; transform: scale(1.4); }
+  }
+
+  /* ── NEBULA BLOBS ── */
+  .nebula {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+    animation: nebula-drift 20s ease-in-out infinite alternate;
+  }
+  .nebula-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(123,47,255,0.18), transparent 70%); top: -150px; right: -100px; }
+  .nebula-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(0,245,255,0.12), transparent 70%); bottom: -100px; left: -80px; animation-delay: -10s; }
+  .nebula-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,255,157,0.1), transparent 70%); top: 40%; left: 40%; animation-delay: -5s; }
+  @keyframes nebula-drift {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(30px, 20px) scale(1.1); }
+  }
+
+  /* ── LAYOUT ── */
+  .page { position: relative; z-index: 1; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+  .page.hidden { display: none; }
+
+  /* ── LOGO ── */
+  .brand {
+    position: fixed; top: 2rem; left: 50%; transform: translateX(-50%);
+    z-index: 100; text-align: center; pointer-events: none;
+  }
+  .brand-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    letter-spacing: 0.5em;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-violet), var(--neon-gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 0 20px rgba(0,245,255,0.5));
+  }
+  .brand-sub {
+    font-size: 0.6rem; letter-spacing: 0.4em; color: rgba(232,244,253,0.4);
+    text-transform: uppercase; margin-top: 0.2rem;
+  }
+
+  /* ── AUTH CARD ── */
+  .auth-card {
+    background: var(--glass);
+    border: 1px solid rgba(0,245,255,0.15);
+    border-radius: 24px;
+    padding: 3.5rem 3rem;
+    width: 100%;
+    max-width: 420px;
+    backdrop-filter: blur(30px);
+    box-shadow: 0 0 80px rgba(0,245,255,0.06), 0 0 200px rgba(123,47,255,0.08), inset 0 1px 0 rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+    animation: card-in 0.8s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  @keyframes card-in {
+    from { opacity: 0; transform: translateY(40px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .auth-card::before {
+    content: '';
+    position: absolute; top: 0; left: 20%; right: 20%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  }
+
+  .card-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--neon-cyan);
+    text-align: center; margin-bottom: 0.4rem;
+    text-shadow: 0 0 20px rgba(0,245,255,0.6);
+  }
+  .card-sub {
+    text-align: center; font-size: 0.75rem; color: rgba(232,244,253,0.4);
+    letter-spacing: 0.15em; margin-bottom: 2.5rem;
+  }
+
+  /* ── TABS ── */
+  .tabs { display: flex; gap: 0; margin-bottom: 2rem; border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,245,255,0.15); }
+  .tab {
+    flex: 1; padding: 0.75rem; text-align: center; cursor: pointer;
+    font-family: 'Orbitron', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em;
+    text-transform: uppercase; transition: all 0.3s;
+    color: rgba(232,244,253,0.4); background: transparent;
+    border: none; position: relative;
+  }
+  .tab.active {
+    background: linear-gradient(135deg, rgba(0,245,255,0.12), rgba(123,47,255,0.12));
+    color: var(--neon-cyan);
+    text-shadow: 0 0 12px rgba(0,245,255,0.8);
+    box-shadow: inset 0 0 20px rgba(0,245,255,0.05);
+  }
+
+  /* ── FORM ── */
+  .form-group { margin-bottom: 1.4rem; position: relative; }
+  .form-label {
+    display: block; font-size: 0.65rem; letter-spacing: 0.2em;
+    color: rgba(232,244,253,0.5); margin-bottom: 0.5rem; text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+  }
+  .form-input {
+    width: 100%; padding: 0.85rem 1.1rem;
+    background: rgba(0,245,255,0.03);
+    border: 1px solid rgba(0,245,255,0.15);
+    border-radius: 10px; color: var(--star-white);
+    font-family: 'Raleway', sans-serif; font-size: 0.9rem;
+    transition: all 0.3s; outline: none;
+    letter-spacing: 0.05em;
+  }
+  .form-input:focus {
+    border-color: var(--neon-cyan);
+    background: rgba(0,245,255,0.06);
+    box-shadow: 0 0 0 3px rgba(0,245,255,0.08), 0 0 20px rgba(0,245,255,0.1);
+  }
+  .form-input::placeholder { color: rgba(232,244,253,0.2); }
+
+  /* ── BUTTON ── */
+  .btn-primary {
+    width: 100%; padding: 1rem;
+    background: linear-gradient(135deg, rgba(0,245,255,0.15), rgba(123,47,255,0.25));
+    border: 1px solid rgba(0,245,255,0.4);
+    border-radius: 12px; color: var(--neon-cyan);
+    font-family: 'Orbitron', sans-serif; font-size: 0.75rem;
+    font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s; margin-top: 0.5rem;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, rgba(0,245,255,0.25), rgba(123,47,255,0.4));
+    box-shadow: 0 0 30px rgba(0,245,255,0.3), 0 0 60px rgba(123,47,255,0.2);
+    transform: translateY(-1px);
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    transition: left 0.5s;
+  }
+  .btn-primary:hover::after { left: 100%; }
+
+  /* ── MESSAGE ── */
+  .msg {
+    text-align: center; font-size: 0.78rem; margin-top: 1rem;
+    padding: 0.7rem; border-radius: 8px; display: none;
+    letter-spacing: 0.05em;
+  }
+  .msg.error { background: rgba(255,50,80,0.1); border: 1px solid rgba(255,50,80,0.3); color: #ff6680; display: block; }
+  .msg.success { background: rgba(0,255,157,0.1); border: 1px solid rgba(0,255,157,0.3); color: var(--aurora-green); display: block; }
+
+  /* ── FLOATING PARTICLES ── */
+  .particle {
+    position: fixed; pointer-events: none; border-radius: 50%;
+    animation: float-up var(--dur) ease-in infinite;
+    opacity: 0; z-index: 0;
+  }
+  @keyframes float-up {
+    0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.3; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="starfield"></div>
+<div class="nebula nebula-1"></div>
+<div class="nebula nebula-2"></div>
+<div class="nebula nebula-3"></div>
+
+<div class="brand">
+  <div class="brand-title">Y H A M</div>
+  <div class="brand-sub">Fractional Worlds · Infinite Realms</div>
+</div>
+
+<!-- AUTH PAGE -->
+<div class="page" id="authPage">
+  <div class="auth-card">
+    <div class="card-title">Portal Access</div>
+    <div class="card-sub">Authenticate to enter the multiverse</div>
+
+    <div class="tabs">
+      <button class="tab active" id="loginTab" onclick="switchTab('login')">Login</button>
+      <button class="tab" id="registerTab" onclick="switchTab('register')">Register</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <div class="form-group">
+        <label class="form-label">Explorer ID</label>
+        <input class="form-input" type="text" id="loginUsername" placeholder="Enter your username">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Passcode</label>
+        <input class="form-input" type="password" id="loginPassword" placeholder="••••••••">
+      </div>
+      <button class="btn-primary" onclick="handleLogin()">▶ Enter the Worlds</button>
+      <div class="msg" id="loginMsg"></div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div id="registerForm" style="display:none">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input class="form-input" type="text" id="regName" placeholder="Your real name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Explorer ID</label>
+        <input class="form-input" type="text" id="regUsername" placeholder="Choose a username">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Passcode</label>
+        <input class="form-input" type="password" id="regPassword" placeholder="Min. 6 characters">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Passcode</label>
+        <input class="form-input" type="password" id="regConfirm" placeholder="Repeat passcode">
+      </div>
+      <button class="btn-primary" onclick="handleRegister()">✦ Create Explorer Profile</button>
+      <div class="msg" id="registerMsg"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STARFIELD ──
+(function(){
+  const sf = document.getElementById('starfield');
+  for(let i=0;i<220;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random()*2.5+0.5;
+    s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*4}s;--min-op:${0.1+Math.random()*0.4};animation-delay:${-Math.random()*5}s;`;
+    sf.appendChild(s);
+  }
+})();
+
+// ── PARTICLES ──
+(function(){
+  const colors = ['#00f5ff','#7b2fff','#ffd700','#00ff9d'];
+  for(let i=0;i<18;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random()*4+2;
+    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};--dur:${8+Math.random()*12}s;animation-delay:${-Math.random()*15}s;filter:blur(1px);`;
+    document.body.appendChild(p);
+  }
+})();
+
+// ── TAB SWITCH ──
+function switchTab(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
+  document.getElementById('registerForm').style.display = isLogin ? 'none' : 'block';
+  document.getElementById('loginTab').className = 'tab' + (isLogin ? ' active' : '');
+  document.getElementById('registerTab').className = 'tab' + (!isLogin ? ' active' : '');
+}
+
+// ── AUTH LOGIC ──
+function showMsg(id, text, type) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = `msg ${type}`;
+}
+
+function handleRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const user = document.getElementById('regUsername').value.trim();
+  const pass = document.getElementById('regPassword').value;
+  const conf = document.getElementById('regConfirm').value;
+
+  if (!name || !user || !pass || !conf) return showMsg('registerMsg', 'All fields are required.', 'error');
+  if (pass.length < 6) return showMsg('registerMsg', 'Passcode must be at least 6 characters.', 'error');
+  if (pass !== conf) return showMsg('registerMsg', 'Passcodes do not match.', 'error');
+
+  const users = JSON.parse(localStorage.getItem('yham_users') || '{}');
+  if (users[user]) return showMsg('registerMsg', 'Explorer ID already taken. Choose another.', 'error');
+
+  users[user] = { name, password: pass, joinedAt: new Date().toISOString() };
+  localStorage.setItem('yham_users', JSON.stringify(users));
+  showMsg('registerMsg', '✦ Explorer profile created! You may now login.', 'success');
+  setTimeout(() => switchTab('login'), 1800);
+}
+
+function handleLogin() {
+  const user = document.getElementById('loginUsername').value.trim();
+  const pass = document.getElementById('loginPassword').value;
+
+  if (!user || !pass) return showMsg('loginMsg', 'Enter your credentials.', 'error');
+
+  const users = JSON.parse(localStorage.getItem('yham_users') || '{}');
+  if (!users[user] || users[user].password !== pass) {
+    return showMsg('loginMsg', 'Invalid Explorer ID or passcode.', 'error');
+  }
+
+  localStorage.setItem('yham_session', JSON.stringify({ username: user, name: users[user].name }));
+  showMsg('loginMsg', '✦ Access granted. Entering portal...', 'success');
+  setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+}
+
+// Auto-redirect if already logged in
+if (localStorage.getItem('yham_session')) {
+  window.location.href = 'dashboard.html';
+}
+</script>
+</body>
+</html>

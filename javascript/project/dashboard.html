@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YHAM — World Selection</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Raleway:wght@200;300;400;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #010714;
+    --neon-cyan: #00f5ff;
+    --neon-violet: #7b2fff;
+    --neon-gold: #ffd700;
+    --aurora-green: #00ff9d;
+    --star-white: #e8f4fd;
+
+    --world1-primary: #00f5ff;
+    --world1-secondary: #0066ff;
+    --world1-glow: rgba(0,245,255,0.4);
+
+    --world2-primary: #ff6b35;
+    --world2-secondary: #ff0080;
+    --world2-glow: rgba(255,107,53,0.4);
+
+    --world3-primary: #7b2fff;
+    --world3-secondary: #00ff9d;
+    --world3-glow: rgba(123,47,255,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Raleway', sans-serif;
+    background: var(--void);
+    color: var(--star-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── STARFIELD ── */
+  #starfield { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+  .star { position: absolute; border-radius: 50%; background: white; animation: twinkle var(--d) ease-in-out infinite alternate; }
+  @keyframes twinkle {
+    from { opacity: var(--min-op); }
+    to   { opacity: 1; }
+  }
+
+  .nebula { position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0; }
+  .nebula-1 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(123,47,255,0.12), transparent 70%); top: -200px; right: -150px; }
+  .nebula-2 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,245,255,0.08), transparent 70%); bottom: -150px; left: -100px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(1,7,20,0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,245,255,0.08);
+  }
+
+  .nav-brand {
+    font-family: 'Cinzel Decorative', serif; font-size: 1.2rem;
+    letter-spacing: 0.4em;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-violet));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    filter: drop-shadow(0 0 10px rgba(0,245,255,0.4));
+  }
+
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+  .nav-user {
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .nav-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-violet));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700;
+    color: var(--void); box-shadow: 0 0 15px rgba(0,245,255,0.4);
+  }
+  .nav-username { font-size: 0.8rem; letter-spacing: 0.1em; color: rgba(232,244,253,0.7); }
+
+  .btn-logout {
+    font-family: 'Orbitron', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em;
+    padding: 0.5rem 1rem; background: transparent;
+    border: 1px solid rgba(255,80,80,0.3); border-radius: 8px;
+    color: rgba(255,120,120,0.7); cursor: pointer; transition: all 0.3s;
+    text-transform: uppercase;
+  }
+  .btn-logout:hover { border-color: #ff5050; color: #ff5050; box-shadow: 0 0 15px rgba(255,80,80,0.2); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; z-index: 1; text-align: center;
+    padding: 10rem 2rem 4rem;
+  }
+  .hero-eyebrow {
+    font-family: 'Orbitron', sans-serif; font-size: 0.65rem;
+    letter-spacing: 0.5em; color: var(--neon-cyan); text-transform: uppercase;
+    opacity: 0.7; margin-bottom: 1.2rem;
+    animation: fade-in 1s both;
+  }
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 900; line-height: 1.1;
+    background: linear-gradient(135deg, #fff 0%, var(--neon-cyan) 40%, var(--neon-violet) 80%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    filter: drop-shadow(0 0 40px rgba(0,245,255,0.3));
+    animation: fade-in 1s 0.2s both;
+  }
+  .hero-sub {
+    font-size: 1rem; color: rgba(232,244,253,0.5); margin-top: 1rem;
+    letter-spacing: 0.15em; font-weight: 300;
+    animation: fade-in 1s 0.4s both;
+  }
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── WORLDS GRID ── */
+  .worlds-container {
+    position: relative; z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem; max-width: 1200px;
+    margin: 0 auto 6rem;
+    padding: 0 2rem;
+    animation: fade-in 1s 0.6s both;
+  }
+
+  /* ── WORLD CARD ── */
+  .world-card {
+    position: relative; border-radius: 24px; overflow: hidden;
+    cursor: pointer; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    height: 520px;
+    border: 1px solid transparent;
+  }
+  .world-card:hover { transform: translateY(-12px) scale(1.02); }
+
+  .world-card.world-1 { border-color: rgba(0,245,255,0.2); }
+  .world-card.world-2 { border-color: rgba(255,107,53,0.2); }
+  .world-card.world-3 { border-color: rgba(123,47,255,0.2); }
+
+  /* Card backgrounds */
+  .world-card.world-1 .card-bg {
+    background: radial-gradient(ellipse at 30% 20%, rgba(0,102,255,0.3), transparent 60%),
+                radial-gradient(ellipse at 70% 80%, rgba(0,245,255,0.2), transparent 50%),
+                linear-gradient(160deg, #010c20, #020818);
+  }
+  .world-card.world-2 .card-bg {
+    background: radial-gradient(ellipse at 70% 20%, rgba(255,0,128,0.25), transparent 60%),
+                radial-gradient(ellipse at 30% 80%, rgba(255,107,53,0.25), transparent 50%),
+                linear-gradient(160deg, #1a0508, #120208);
+  }
+  .world-card.world-3 .card-bg {
+    background: radial-gradient(ellipse at 50% 20%, rgba(123,47,255,0.3), transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(0,255,157,0.15), transparent 50%),
+                linear-gradient(160deg, #08030e, #040218);
+  }
+
+  .card-bg {
+    position: absolute; inset: 0;
+    transition: all 0.5s;
+  }
+  .world-card:hover .card-bg { filter: brightness(1.3); }
+
+  /* Planet sphere */
+  .planet-scene {
+    position: absolute; top: 50px; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 200px;
+  }
+
+  .planet {
+    width: 180px; height: 180px; border-radius: 50%; margin: auto;
+    position: relative; box-shadow: inset -30px -15px 40px rgba(0,0,0,0.6);
+    animation: planet-rotate 20s linear infinite;
+    transition: box-shadow 0.4s, transform 0.4s;
+  }
+  .world-card:hover .planet { transform: scale(1.1); }
+
+  .world-1 .planet {
+    background: radial-gradient(ellipse at 35% 35%, #00b4d8, #0066cc 40%, #001a4d 80%);
+    box-shadow: inset -30px -15px 40px rgba(0,0,0,0.6), 0 0 60px rgba(0,245,255,0.5), 0 0 120px rgba(0,102,255,0.3);
+  }
+  .world-2 .planet {
+    background: radial-gradient(ellipse at 35% 35%, #ff9a3c, #cc2200 40%, #660011 80%);
+    box-shadow: inset -30px -15px 40px rgba(0,0,0,0.6), 0 0 60px rgba(255,107,53,0.5), 0 0 120px rgba(255,0,80,0.3);
+  }
+  .world-3 .planet {
+    background: radial-gradient(ellipse at 35% 35%, #b060ff, #5500cc 40%, #1a0044 80%);
+    box-shadow: inset -30px -15px 40px rgba(0,0,0,0.6), 0 0 60px rgba(123,47,255,0.5), 0 0 120px rgba(0,255,157,0.2);
+  }
+
+  /* Planet rings */
+  .ring {
+    position: absolute; top: 50%; left: 50%;
+    border-radius: 50%; border: 3px solid;
+    transform: translate(-50%,-50%) rotateX(75deg);
+    pointer-events: none;
+  }
+  .world-1 .ring { width: 240px; height: 240px; border-color: rgba(0,245,255,0.3); box-shadow: 0 0 20px rgba(0,245,255,0.2); }
+  .world-3 .ring { width: 240px; height: 240px; border-color: rgba(0,255,157,0.3); box-shadow: 0 0 20px rgba(0,255,157,0.2); }
+
+  /* Planet surface details */
+  .planet::after {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    background: repeating-linear-gradient(20deg, transparent, transparent 8px, rgba(255,255,255,0.03) 8px, rgba(255,255,255,0.03) 9px);
+  }
+
+  @keyframes planet-rotate {
+    from { filter: hue-rotate(0deg); }
+    to   { filter: hue-rotate(20deg); }
+  }
+
+  /* Orbiting moon */
+  .moon-orbit {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    animation: orbit 8s linear infinite;
+  }
+  .moon {
+    width: 20px; height: 20px; border-radius: 50%; position: absolute;
+    top: -10px; left: 50%; transform: translateX(-50%);
+  }
+  .world-1 .moon { background: radial-gradient(circle at 35% 35%, #aaf, #446); box-shadow: 0 0 10px rgba(100,150,255,0.5); }
+  .world-2 .moon { background: radial-gradient(circle at 35% 35%, #ffa, #640); box-shadow: 0 0 10px rgba(255,200,50,0.5); }
+  .world-3 .moon { background: radial-gradient(circle at 35% 35%, #aff, #046); box-shadow: 0 0 10px rgba(100,255,200,0.5); }
+  @keyframes orbit { from { transform: rotate(0deg) translateY(-105px) rotate(0deg); } to { transform: rotate(360deg) translateY(-105px) rotate(-360deg); } }
+
+  /* Card content */
+  .card-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 2rem;
+    background: linear-gradient(to top, rgba(1,7,20,0.95) 0%, transparent 100%);
+  }
+
+  .world-tag {
+    display: inline-block; font-family: 'Orbitron', sans-serif;
+    font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase;
+    padding: 0.3rem 0.8rem; border-radius: 20px; margin-bottom: 0.8rem;
+  }
+  .world-1 .world-tag { background: rgba(0,245,255,0.1); border: 1px solid rgba(0,245,255,0.3); color: var(--neon-cyan); }
+  .world-2 .world-tag { background: rgba(255,107,53,0.1); border: 1px solid rgba(255,107,53,0.3); color: var(--world2-primary); }
+  .world-3 .world-tag { background: rgba(123,47,255,0.1); border: 1px solid rgba(123,47,255,0.3); color: #b060ff; }
+
+  .world-name {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.5rem; font-weight: 700; margin-bottom: 0.6rem; line-height: 1.2;
+  }
+  .world-1 .world-name { color: var(--neon-cyan); text-shadow: 0 0 20px rgba(0,245,255,0.5); }
+  .world-2 .world-name { color: var(--world2-primary); text-shadow: 0 0 20px rgba(255,107,53,0.5); }
+  .world-3 .world-name { color: #b060ff; text-shadow: 0 0 20px rgba(123,47,255,0.5); }
+
+  .world-desc {
+    font-size: 0.8rem; color: rgba(232,244,253,0.55); line-height: 1.6;
+    margin-bottom: 1.2rem; font-weight: 300;
+  }
+
+  .world-stats { display: flex; gap: 1.5rem; margin-bottom: 1.4rem; }
+  .stat { text-align: center; }
+  .stat-value { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700; }
+  .world-1 .stat-value { color: var(--neon-cyan); }
+  .world-2 .stat-value { color: var(--world2-primary); }
+  .world-3 .stat-value { color: #b060ff; }
+  .stat-label { font-size: 0.55rem; letter-spacing: 0.15em; color: rgba(232,244,253,0.35); text-transform: uppercase; margin-top: 0.2rem; }
+
+  .enter-btn {
+    width: 100%; padding: 0.8rem; border-radius: 10px; border: 1px solid;
+    font-family: 'Orbitron', sans-serif; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .world-1 .enter-btn { background: rgba(0,245,255,0.08); border-color: rgba(0,245,255,0.4); color: var(--neon-cyan); }
+  .world-1 .enter-btn:hover { background: rgba(0,245,255,0.18); box-shadow: 0 0 30px rgba(0,245,255,0.3); }
+  .world-2 .enter-btn { background: rgba(255,107,53,0.08); border-color: rgba(255,107,53,0.4); color: var(--world2-primary); }
+  .world-2 .enter-btn:hover { background: rgba(255,107,53,0.18); box-shadow: 0 0 30px rgba(255,107,53,0.3); }
+  .world-3 .enter-btn { background: rgba(123,47,255,0.08); border-color: rgba(123,47,255,0.4); color: #b060ff; }
+  .world-3 .enter-btn:hover { background: rgba(123,47,255,0.18); box-shadow: 0 0 30px rgba(123,47,255,0.3); }
+
+  /* ── FOOTER STATS ── */
+  .dash-footer {
+    position: relative; z-index: 1;
+    text-align: center; padding: 2rem;
+    border-top: 1px solid rgba(0,245,255,0.06);
+    font-size: 0.7rem; letter-spacing: 0.2em;
+    color: rgba(232,244,253,0.2); text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  /* Particle */
+  .particle { position: fixed; pointer-events: none; border-radius: 50%; animation: float-up var(--dur) ease-in infinite; opacity: 0; z-index: 0; }
+  @keyframes float-up {
+    0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+    10%  { opacity: 0.5; }
+    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="starfield"></div>
+<div class="nebula nebula-1"></div>
+<div class="nebula nebula-2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">YHAM</div>
+  <div class="nav-right">
+    <div class="nav-user">
+      <div class="nav-avatar" id="navAvatar">?</div>
+      <span class="nav-username" id="navUsername">Explorer</span>
+    </div>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">✦ Fractional Multiverse ✦</div>
+  <div class="hero-title">Choose Your World</div>
+  <div class="hero-sub">Touch a world to begin your journey</div>
+</div>
+
+<!-- WORLDS -->
+<div class="worlds-container">
+
+  <!-- WORLD 1: AQUA'LON -->
+  <div class="world-card world-1" onclick="enterWorld(1)">
+    <div class="card-bg"></div>
+    <div class="planet-scene">
+      <div class="planet"></div>
+      <div class="ring"></div>
+      <div class="moon-orbit"><div class="moon"></div></div>
+    </div>
+    <div class="card-content">
+      <div class="world-tag">World I · Ocean Realm</div>
+      <div class="world-name">Aqua'lon</div>
+      <div class="world-desc">An infinite ocean world where bioluminescent cities drift beneath crystal-clear waters. Ancient sea gods govern the tides of time.</div>
+      <div class="world-stats">
+        <div class="stat"><div class="stat-value">97%</div><div class="stat-label">Water Coverage</div></div>
+        <div class="stat"><div class="stat-value">3</div><div class="stat-label">Moons</div></div>
+        <div class="stat"><div class="stat-value">12k</div><div class="stat-label">Species</div></div>
+      </div>
+      <button class="enter-btn">▶ Enter Aqua'lon</button>
+    </div>
+  </div>
+
+  <!-- WORLD 2: IGNAR'OS -->
+  <div class="world-card world-2" onclick="enterWorld(2)">
+    <div class="card-bg"></div>
+    <div class="planet-scene">
+      <div class="planet"></div>
+      <div class="moon-orbit" style="animation-duration:12s;"><div class="moon"></div></div>
+    </div>
+    <div class="card-content">
+      <div class="world-tag">World II · Fire Realm</div>
+      <div class="world-name">Ignar'os</div>
+      <div class="world-desc">A volcanic world of eternal flame where sky-born warriors ride magma phoenixes through rivers of liquid fire and burning storms.</div>
+      <div class="world-stats">
+        <div class="stat"><div class="stat-value">4200°</div><div class="stat-label">Core Temp</div></div>
+        <div class="stat"><div class="stat-value">1</div><div class="stat-label">Moon</div></div>
+        <div class="stat"><div class="stat-value">890</div><div class="stat-label">Volcanoes</div></div>
+      </div>
+      <button class="enter-btn">▶ Enter Ignar'os</button>
+    </div>
+  </div>
+
+  <!-- WORLD 3: UMBRA'VEIL -->
+  <div class="world-card world-3" onclick="enterWorld(3)">
+    <div class="card-bg"></div>
+    <div class="planet-scene">
+      <div class="planet"></div>
+      <div class="ring"></div>
+      <div class="moon-orbit" style="animation-duration:6s;animation-direction:reverse;"><div class="moon"></div></div>
+    </div>
+    <div class="card-content">
+      <div class="world-tag">World III · Spirit Realm</div>
+      <div class="world-name">Umbra'veil</div>
+      <div class="world-desc">A dimension between worlds, veiled in perpetual twilight. Spirit-weavers bend reality through sacred songs older than the universe itself.</div>
+      <div class="world-stats">
+        <div class="stat"><div class="stat-value">∞</div><div class="stat-label">Dimensions</div></div>
+        <div class="stat"><div class="stat-value">7</div><div class="stat-label">Moons</div></div>
+        <div class="stat"><div class="stat-value">0.3g</div><div class="stat-label">Gravity</div></div>
+      </div>
+      <button class="enter-btn">▶ Enter Umbra'veil</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="dash-footer">
+  YHAM Multiverse · 3 Realms Discovered · Explore the Unknown
+</div>
+
+<script>
+// ── STARFIELD ──
+(function(){
+  const sf = document.getElementById('starfield');
+  sf.style.background = 'radial-gradient(ellipse at 50% 50%, #030a1a 0%, #010714 70%)';
+  for(let i=0;i<280;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random()*2.5+0.3;
+    s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*5}s;--min-op:${0.05+Math.random()*0.3};animation-delay:${-Math.random()*6}s;`;
+    sf.appendChild(s);
+  }
+})();
+
+// ── PARTICLES ──
+(function(){
+  const colors=['#00f5ff','#7b2fff','#ff6b35','#00ff9d','#ffd700'];
+  for(let i=0;i<20;i++){
+    const p=document.createElement('div'); p.className='particle';
+    const size=Math.random()*3+1;
+    p.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};--dur:${10+Math.random()*15}s;animation-delay:${-Math.random()*20}s;filter:blur(1px);`;
+    document.body.appendChild(p);
+  }
+})();
+
+// ── AUTH CHECK ──
+const session = JSON.parse(localStorage.getItem('yham_session') || 'null');
+if (!session) { window.location.href = 'index.html'; }
+else {
+  document.getElementById('navAvatar').textContent = session.name.charAt(0).toUpperCase();
+  document.getElementById('navUsername').textContent = session.name;
+}
+
+function logout() {
+  localStorage.removeItem('yham_session');
+  window.location.href = 'index.html';
+}
+
+function enterWorld(id) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:var(--void);opacity:0;z-index:9999;transition:opacity 0.6s;';
+  document.body.appendChild(overlay);
+  requestAnimationFrame(() => { overlay.style.opacity = '1'; });
+  setTimeout(() => { window.location.href = `world${id}.html`; }, 650);
+}
+</script>
+</body>
+</html>

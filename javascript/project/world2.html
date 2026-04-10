@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YHAM — Ignar'os · Fire World</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Raleway:wght@200;300;400;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #ff6b35;
+    --secondary: #ff0080;
+    --gold: #ffd700;
+    --dark: #120208;
+    --star-white: #ffe8e0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Raleway',sans-serif; background:var(--dark); color:var(--star-white); min-height:100vh; overflow-x:hidden; }
+
+  /* FIRE BACKGROUND */
+  .fire-bg {
+    position:fixed; inset:0; z-index:0;
+    background:radial-gradient(ellipse at 50% 80%, #330500 0%, #1a0208 40%, #120208 70%, #0a0105 100%);
+    overflow:hidden;
+  }
+  .lava-blob {
+    position:absolute; border-radius:50%; filter:blur(80px); animation:lava-move var(--d) ease-in-out infinite alternate;
+  }
+  .lb1 { width:600px;height:400px;background:radial-gradient(ellipse,rgba(255,80,0,0.25),transparent 70%);bottom:-100px;left:10%;--d:8s; }
+  .lb2 { width:400px;height:300px;background:radial-gradient(ellipse,rgba(255,0,80,0.2),transparent 70%);bottom:-50px;right:10%;--d:11s;animation-delay:-4s; }
+  .lb3 { width:300px;height:200px;background:radial-gradient(ellipse,rgba(255,180,0,0.15),transparent 70%);top:20%;left:50%;--d:6s;animation-delay:-2s; }
+  @keyframes lava-move { from{transform:translate(0,0)scale(1);}to{transform:translate(30px,20px)scale(1.2);} }
+
+  /* Ember particles */
+  .ember { position:fixed; pointer-events:none; width:3px;height:3px; border-radius:50%; animation:ember-rise var(--d) ease-out infinite; opacity:0; }
+  @keyframes ember-rise {
+    0%   { transform:translateY(100vh) translateX(0) scale(1); opacity:0; }
+    10%  { opacity:1; }
+    80%  { opacity:0.6; }
+    100% { transform:translateY(-10vh) translateX(var(--dx)) scale(0.3); opacity:0; }
+  }
+
+  nav {
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.2rem 3rem;
+    background:rgba(18,2,8,0.85); backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,107,53,0.12);
+  }
+  .nav-back {
+    display:flex;align-items:center;gap:0.6rem;cursor:pointer;
+    font-family:'Orbitron',sans-serif;font-size:0.6rem;letter-spacing:0.2em;
+    color:rgba(255,107,53,0.6);transition:all 0.3s;text-transform:uppercase;text-decoration:none;
+    border:1px solid rgba(255,107,53,0.25);border-radius:8px;padding:0.5rem 1rem;
+  }
+  .nav-back:hover { color:var(--primary);border-color:var(--primary);box-shadow:0 0 15px rgba(255,107,53,0.25); }
+  .nav-brand { font-family:'Cinzel Decorative',serif;font-size:1rem;letter-spacing:0.3em;
+    background:linear-gradient(135deg,var(--primary),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  .world-indicator { font-family:'Orbitron',sans-serif;font-size:0.6rem;letter-spacing:0.2em;
+    color:var(--primary);opacity:0.7;text-transform:uppercase;
+    padding:0.4rem 0.8rem;border:1px solid rgba(255,107,53,0.25);border-radius:20px; }
+
+  .hero { position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8rem 2rem 4rem;text-align:center; }
+  .world-num { font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:0.5em;color:var(--primary);opacity:0.7;margin-bottom:1rem;text-transform:uppercase; }
+  .world-title {
+    font-family:'Cinzel Decorative',serif;font-size:clamp(3rem,8vw,7rem);font-weight:900;
+    background:linear-gradient(135deg,#fff9e6 0%,var(--gold) 30%,var(--primary) 60%,var(--secondary) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    filter:drop-shadow(0 0 60px rgba(255,107,53,0.6));
+    line-height:1;margin-bottom:0.5rem;
+    animation:title-in 1.2s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  @keyframes title-in { from{opacity:0;transform:scale(0.8)translateY(30px);}to{opacity:1;transform:scale(1)translateY(0);} }
+  .world-subtitle { font-size:1.1rem;color:rgba(255,107,53,0.7);letter-spacing:0.3em;font-weight:300;margin-bottom:2rem;animation:fade-up 1s 0.3s both; }
+  .world-tagline { font-size:1rem;color:rgba(255,232,224,0.5);max-width:600px;line-height:1.8;animation:fade-up 1s 0.5s both; }
+  @keyframes fade-up { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);} }
+  .scroll-hint { margin-top:3rem;animation:bounce 2s ease-in-out infinite,fade-up 1s 0.8s both;color:rgba(255,107,53,0.4);font-size:1.5rem; }
+  @keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(8px);} }
+
+  .content { position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:4rem 2rem 8rem; }
+  .section-title { font-family:'Cinzel Decorative',serif;font-size:1.6rem;color:var(--primary);text-shadow:0 0 20px rgba(255,107,53,0.5);margin-bottom:0.5rem; }
+  .section-line { width:80px;height:2px;background:linear-gradient(90deg,var(--primary),transparent);margin-bottom:2rem; }
+
+  .stats-row { display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:5rem; }
+  @media(max-width:700px){.stats-row{grid-template-columns:repeat(2,1fr);}}
+  .stat-box { text-align:center;padding:2rem 1rem;background:rgba(255,107,53,0.05);border:1px solid rgba(255,107,53,0.15);border-radius:16px;transition:all 0.4s; }
+  .stat-box:hover { background:rgba(255,107,53,0.1);transform:translateY(-3px);box-shadow:0 15px 40px rgba(255,107,53,0.1); }
+  .stat-big { font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:900;color:var(--primary);text-shadow:0 0 20px rgba(255,107,53,0.7); }
+  .stat-lbl { font-size:0.65rem;letter-spacing:0.2em;color:rgba(255,232,224,0.35);text-transform:uppercase;margin-top:0.5rem; }
+
+  .lore-grid { display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:5rem; }
+  @media(max-width:700px){.lore-grid{grid-template-columns:1fr;}}
+  .lore-card { background:rgba(255,107,53,0.05);border:1px solid rgba(255,107,53,0.15);border-radius:16px;padding:2rem;position:relative;overflow:hidden;transition:all 0.4s; }
+  .lore-card:hover { background:rgba(255,107,53,0.09);border-color:rgba(255,107,53,0.3);transform:translateY(-4px);box-shadow:0 20px 60px rgba(255,107,53,0.1); }
+  .lore-card::before { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,107,53,0.4),transparent); }
+  .lore-icon { font-size:2.5rem;margin-bottom:1rem; }
+  .lore-name { font-family:'Orbitron',sans-serif;font-size:0.8rem;letter-spacing:0.2em;color:var(--primary);margin-bottom:0.8rem;text-transform:uppercase; }
+  .lore-text { font-size:0.85rem;color:rgba(255,232,224,0.5);line-height:1.8;font-weight:300; }
+
+  .creature-strip { display:flex;gap:1.5rem;overflow-x:auto;padding-bottom:1rem;margin-bottom:5rem; }
+  .creature-strip::-webkit-scrollbar { height:2px; }
+  .creature-strip::-webkit-scrollbar-thumb { background:rgba(255,107,53,0.3);border-radius:2px; }
+  .creature-card { flex:0 0 200px;background:rgba(255,107,53,0.05);border:1px solid rgba(255,107,53,0.15);border-radius:16px;padding:1.5rem;text-align:center;transition:all 0.3s; }
+  .creature-card:hover { background:rgba(255,107,53,0.1);transform:translateY(-4px);box-shadow:0 15px 40px rgba(255,107,53,0.12); }
+  .creature-emoji { font-size:3rem;display:block;margin-bottom:0.8rem;animation:flicker 3s ease-in-out infinite; }
+  @keyframes flicker { 0%,100%{filter:brightness(1);}50%{filter:brightness(1.3);} }
+  .creature-name { font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:0.15em;color:var(--primary);text-transform:uppercase;margin-bottom:0.4rem; }
+  .creature-desc { font-size:0.7rem;color:rgba(255,232,224,0.4);line-height:1.5; }
+
+  .mystery-block { background:linear-gradient(135deg,rgba(255,107,53,0.06),rgba(255,0,128,0.06));border:1px solid rgba(255,107,53,0.25);border-radius:20px;padding:3rem;text-align:center;position:relative;overflow:hidden;margin-bottom:2rem; }
+  .mystery-block::before { content:'';position:absolute;top:0;left:25%;right:25%;height:1px;background:linear-gradient(90deg,transparent,var(--primary),transparent); }
+  .mystery-text { font-size:1.1rem;color:rgba(255,107,53,0.75);font-style:italic;line-height:1.8;font-weight:300;letter-spacing:0.05em; }
+  .mystery-attr { margin-top:1rem;font-family:'Orbitron',sans-serif;font-size:0.6rem;letter-spacing:0.3em;color:rgba(255,107,53,0.3);text-transform:uppercase; }
+</style>
+</head>
+<body>
+
+<div class="fire-bg">
+  <div class="lava-blob lb1"></div>
+  <div class="lava-blob lb2"></div>
+  <div class="lava-blob lb3"></div>
+</div>
+
+<nav>
+  <a class="nav-back" href="dashboard.html">← Back to Worlds</a>
+  <div class="nav-brand">YHAM</div>
+  <div class="world-indicator">World II · Ignar'os</div>
+</nav>
+
+<div class="hero">
+  <div class="world-num">✦ World II · Fire Realm ✦</div>
+  <div class="world-title">Ignar'os</div>
+  <div class="world-subtitle">The Eternal Flame</div>
+  <div class="world-tagline">A volcanic world of endless fire where sky-born warriors ride magma phoenixes through rivers of liquid flame and storms made of pure heat and fury.</div>
+  <div class="scroll-hint">↓</div>
+</div>
+
+<div class="content">
+
+  <div class="section-title">World Data</div>
+  <div class="section-line"></div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-big">4200°</div><div class="stat-lbl">Core Temp (K)</div></div>
+    <div class="stat-box"><div class="stat-big">890</div><div class="stat-lbl">Active Volcanoes</div></div>
+    <div class="stat-box"><div class="stat-big">1</div><div class="stat-lbl">Blood Moon</div></div>
+    <div class="stat-box"><div class="stat-big">0%</div><div class="stat-lbl">Surface Water</div></div>
+  </div>
+
+  <div class="section-title">Civilizations & Lore</div>
+  <div class="section-line"></div>
+  <div class="lore-grid">
+    <div class="lore-card">
+      <div class="lore-icon">🔥</div>
+      <div class="lore-name">The Kar'Veth</div>
+      <div class="lore-text">Forge-born warriors who bathe in lava rivers as a rite of passage. Their armor is crafted from solidified star-metal that fell during the Ember Rain of ten thousand years past.</div>
+    </div>
+    <div class="lore-card">
+      <div class="lore-icon">📜</div>
+      <div class="lore-name">The Ash Scrolls</div>
+      <div class="lore-text">Ancient knowledge written in the soot of a dying god, etched into volcanic obsidian. Only the Flame Readers can decipher its warnings — few who try survive the reading.</div>
+    </div>
+    <div class="lore-card">
+      <div class="lore-icon">🏔️</div>
+      <div class="lore-name">Mount Khar'Vul</div>
+      <div class="lore-text">The world's highest volcano and sacred birthplace of the Kar'Veth. Its peak pierces the atmosphere and is said to touch the dying sun that watches over Ignar'os with silent rage.</div>
+    </div>
+    <div class="lore-card">
+      <div class="lore-icon">💥</div>
+      <div class="lore-name">The Ember War</div>
+      <div class="lore-text">A century-long conflict between the sky clans and the deep-earth burrowers that ended when both sides fell into the Great Caldera — and somehow became one unified people of fire.</div>
+    </div>
+  </div>
+
+  <div class="section-title">Known Creatures</div>
+  <div class="section-line"></div>
+  <div class="creature-strip">
+    <div class="creature-card"><span class="creature-emoji">🦅</span><div class="creature-name">Magma Phoenix</div><div class="creature-desc">Undying sky riders reborn in volcanic eruptions, fiercer each time.</div></div>
+    <div class="creature-card"><span class="creature-emoji">🐉</div><div class="creature-name">Cinder Drake</div><div class="creature-desc">Blind tunnel hunters that track prey through heat signatures in the dark.</div></div>
+    <div class="creature-card"><span class="creature-emoji">🦂</span><div class="creature-name">Lava Scorpion</div><div class="creature-desc">Colossal arachnids whose venom ignites on contact with open air.</div></div>
+    <div class="creature-card"><span class="creature-emoji">🦁</span><div class="creature-name">Flame Mane</div><div class="creature-desc">Proud predators with manes of living fire that never burn out.</div></div>
+    <div class="creature-card"><span class="creature-emoji">🕷️</span><div class="creature-name">Ash Weaver</div><div class="creature-desc">Tiny architects that spin webs of cooled magma into deadly labyrinths.</div></div>
+  </div>
+
+  <div class="mystery-block">
+    <div class="mystery-text">"We did not fear the fire. We became the fire. Every scar is a map. Every burn is a memory the body refuses to forget. To be Kar'Veth is to be forged — never finished."</div>
+    <div class="mystery-attr">— Warlord Drax'Ur, spoken before the Last Eruption</div>
+  </div>
+
+</div>
+
+<script>
+// Ember particles
+(function(){
+  const colors=['#ff6b35','#ff0080','#ffd700','#ff4400'];
+  for(let i=0;i<35;i++){
+    const e=document.createElement('div'); e.className='ember';
+    e.style.cssText=`left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};--d:${3+Math.random()*7}s;--dx:${-60+Math.random()*120}px;animation-delay:${-Math.random()*10}s;box-shadow:0 0 4px ${colors[Math.floor(Math.random()*colors.length)]};`;
+    document.body.appendChild(e);
+  }
+})();
+
+if (!localStorage.getItem('yham_session')) window.location.href = 'index.html';
+</script>
+</body>
+</html>

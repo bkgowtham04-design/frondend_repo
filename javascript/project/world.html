@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YHAM — Aqua'lon · Ocean World</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Raleway:wght@200;300;400;600&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #010714;
+    --primary: #00f5ff;
+    --secondary: #0066ff;
+    --accent: #00ff9d;
+    --dark: #000d20;
+    --star-white: #e8f4fd;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Raleway',sans-serif; background:var(--dark); color:var(--star-white); min-height:100vh; overflow-x:hidden; }
+
+  /* ANIMATED OCEAN BACKGROUND */
+  .ocean-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background: linear-gradient(180deg, #000d20 0%, #001a40 30%, #002255 60%, #001030 100%);
+    overflow: hidden;
+  }
+  .wave-layer {
+    position: absolute; bottom: 0; left: -50%; width: 200%; height: 60%;
+    border-radius: 50% 50% 0 0;
+    animation: wave var(--spd) ease-in-out infinite alternate;
+    opacity: 0.15;
+  }
+  .w1 { background: radial-gradient(ellipse, #00f5ff, #0066ff); --spd:6s; height:55%; }
+  .w2 { background: radial-gradient(ellipse, #0044cc, #001155); --spd:9s; height:45%; animation-delay:-3s; opacity:0.2; }
+  .w3 { background: radial-gradient(ellipse, #00ff9d, #006644); --spd:7s; height:35%; animation-delay:-1.5s; opacity:0.1; }
+  @keyframes wave { from { transform: translateX(-5%) scaleY(1); } to { transform: translateX(5%) scaleY(1.1); } }
+
+  /* Bioluminescent particles */
+  .bio { position:fixed; border-radius:50%; pointer-events:none; animation:bio-drift var(--d) ease-in-out infinite alternate; }
+  @keyframes bio-drift {
+    from { transform:translate(0,0) scale(1); opacity:var(--op); }
+    to   { transform:translate(var(--tx),var(--ty)) scale(1.5); opacity:calc(var(--op)*0.3); }
+  }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.2rem 3rem;
+    background:rgba(0,13,32,0.8); backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(0,245,255,0.1);
+  }
+  .nav-back {
+    display:flex; align-items:center; gap:0.6rem; cursor:pointer;
+    font-family:'Orbitron',sans-serif; font-size:0.6rem; letter-spacing:0.2em;
+    color:rgba(0,245,255,0.6); transition:color 0.3s; text-transform:uppercase; text-decoration:none;
+    border:1px solid rgba(0,245,255,0.2); border-radius:8px; padding:0.5rem 1rem;
+  }
+  .nav-back:hover { color:var(--primary); border-color:var(--primary); box-shadow:0 0 15px rgba(0,245,255,0.2); }
+  .nav-brand { font-family:'Cinzel Decorative',serif; font-size:1rem; letter-spacing:0.3em;
+    background:linear-gradient(135deg,var(--primary),var(--secondary)); -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; }
+  .world-indicator {
+    font-family:'Orbitron',sans-serif; font-size:0.6rem; letter-spacing:0.2em;
+    color:var(--primary); opacity:0.7; text-transform:uppercase;
+    padding:0.4rem 0.8rem; border:1px solid rgba(0,245,255,0.2); border-radius:20px;
+  }
+
+  /* HERO */
+  .hero { position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8rem 2rem 4rem; text-align:center; }
+
+  .world-num { font-family:'Orbitron',sans-serif; font-size:0.65rem; letter-spacing:0.5em; color:var(--primary); opacity:0.6; margin-bottom:1rem; text-transform:uppercase; }
+  .world-title {
+    font-family:'Cinzel Decorative',serif; font-size:clamp(3rem,8vw,7rem); font-weight:900;
+    background:linear-gradient(135deg,#fff 0%,var(--primary) 50%,var(--accent) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    filter:drop-shadow(0 0 60px rgba(0,245,255,0.5));
+    line-height:1; margin-bottom:0.5rem;
+    animation:title-in 1.2s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  @keyframes title-in { from{opacity:0;transform:scale(0.8) translateY(30px);}to{opacity:1;transform:scale(1) translateY(0);} }
+  .world-subtitle { font-size:1.1rem; color:rgba(0,245,255,0.6); letter-spacing:0.3em; font-weight:300; margin-bottom:2rem; animation:fade-up 1s 0.3s both; }
+  .world-tagline { font-size:1rem; color:rgba(232,244,253,0.5); max-width:600px; line-height:1.8; animation:fade-up 1s 0.5s both; }
+  @keyframes fade-up { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);} }
+
+  /* SCROLL ARROW */
+  .scroll-hint { margin-top:3rem; animation:bounce 2s ease-in-out infinite, fade-up 1s 0.8s both; color:rgba(0,245,255,0.4); font-size:1.5rem; }
+  @keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(8px);} }
+
+  /* SECTIONS */
+  .content { position:relative; z-index:1; max-width:1100px; margin:0 auto; padding:4rem 2rem 8rem; }
+
+  .section-title {
+    font-family:'Cinzel Decorative',serif; font-size:1.6rem;
+    color:var(--primary); text-shadow:0 0 20px rgba(0,245,255,0.4);
+    margin-bottom:0.5rem;
+  }
+  .section-line { width:80px; height:2px; background:linear-gradient(90deg,var(--primary),transparent); margin-bottom:2rem; }
+
+  /* LORE */
+  .lore-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-bottom:5rem; }
+  @media(max-width:700px){.lore-grid{grid-template-columns:1fr;}}
+  .lore-card {
+    background:rgba(0,245,255,0.04); border:1px solid rgba(0,245,255,0.12);
+    border-radius:16px; padding:2rem; position:relative; overflow:hidden;
+    transition:all 0.4s;
+  }
+  .lore-card:hover { background:rgba(0,245,255,0.07); border-color:rgba(0,245,255,0.25); transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,245,255,0.08); }
+  .lore-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(0,245,255,0.3),transparent); }
+  .lore-icon { font-size:2.5rem; margin-bottom:1rem; }
+  .lore-name { font-family:'Orbitron',sans-serif; font-size:0.8rem; letter-spacing:0.2em; color:var(--primary); margin-bottom:0.8rem; text-transform:uppercase; }
+  .lore-text { font-size:0.85rem; color:rgba(232,244,253,0.55); line-height:1.8; font-weight:300; }
+
+  /* STATS ROW */
+  .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin-bottom:5rem; }
+  @media(max-width:700px){.stats-row{grid-template-columns:repeat(2,1fr);}}
+  .stat-box {
+    text-align:center; padding:2rem 1rem;
+    background:rgba(0,245,255,0.04); border:1px solid rgba(0,245,255,0.12); border-radius:16px;
+    transition:all 0.4s;
+  }
+  .stat-box:hover { background:rgba(0,245,255,0.08); transform:translateY(-3px); }
+  .stat-big { font-family:'Orbitron',sans-serif; font-size:2rem; font-weight:900; color:var(--primary); text-shadow:0 0 20px rgba(0,245,255,0.6); }
+  .stat-lbl { font-size:0.65rem; letter-spacing:0.2em; color:rgba(232,244,253,0.35); text-transform:uppercase; margin-top:0.5rem; }
+
+  /* CREATURES */
+  .creature-strip { display:flex; gap:1.5rem; overflow-x:auto; padding-bottom:1rem; margin-bottom:5rem; }
+  .creature-strip::-webkit-scrollbar { height:2px; }
+  .creature-strip::-webkit-scrollbar-thumb { background:rgba(0,245,255,0.3); border-radius:2px; }
+  .creature-card {
+    flex:0 0 200px; background:rgba(0,245,255,0.04); border:1px solid rgba(0,245,255,0.12);
+    border-radius:16px; padding:1.5rem; text-align:center; transition:all 0.3s; cursor:default;
+  }
+  .creature-card:hover { background:rgba(0,245,255,0.09); transform:translateY(-4px); box-shadow:0 15px 40px rgba(0,245,255,0.1); }
+  .creature-emoji { font-size:3rem; display:block; margin-bottom:0.8rem; animation:bob 3s ease-in-out infinite; }
+  @keyframes bob { 0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);} }
+  .creature-name { font-family:'Orbitron',sans-serif; font-size:0.65rem; letter-spacing:0.15em; color:var(--primary); text-transform:uppercase; margin-bottom:0.4rem; }
+  .creature-desc { font-size:0.7rem; color:rgba(232,244,253,0.4); line-height:1.5; }
+
+  /* MYSTERY BLOCK */
+  .mystery-block {
+    background:linear-gradient(135deg, rgba(0,245,255,0.05), rgba(0,102,255,0.08));
+    border:1px solid rgba(0,245,255,0.2); border-radius:20px; padding:3rem;
+    text-align:center; position:relative; overflow:hidden; margin-bottom:2rem;
+  }
+  .mystery-block::before { content:''; position:absolute; top:0; left:25%; right:25%; height:1px; background:linear-gradient(90deg,transparent,var(--primary),transparent); }
+  .mystery-text { font-size:1.1rem; color:rgba(0,245,255,0.7); font-style:italic; line-height:1.8; font-weight:300; letter-spacing:0.05em; }
+  .mystery-attr { margin-top:1rem; font-family:'Orbitron',sans-serif; font-size:0.6rem; letter-spacing:0.3em; color:rgba(0,245,255,0.3); text-transform:uppercase; }
+</style>
+</head>
+<body>
+
+<div class="ocean-bg">
+  <div class="wave-layer w1"></div>
+  <div class="wave-layer w2"></div>
+  <div class="wave-layer w3"></div>
+</div>
+
+<nav>
+  <a class="nav-back" href="dashboard.html">← Back to Worlds</a>
+  <div class="nav-brand">YHAM</div>
+  <div class="world-indicator">World I · Aqua'lon</div>
+</nav>
+
+<div class="hero">
+  <div class="world-num">✦ World I · Ocean Realm ✦</div>
+  <div class="world-title">Aqua'lon</div>
+  <div class="world-subtitle">Where the Deep Sings</div>
+  <div class="world-tagline">An infinite ocean world where bioluminescent civilizations drift beneath crystal waters and ancient sea gods govern the tides of time itself.</div>
+  <div class="scroll-hint">↓</div>
+</div>
+
+<div class="content">
+
+  <div class="section-title">World Data</div>
+  <div class="section-line"></div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-big">97%</div><div class="stat-lbl">Water Coverage</div></div>
+    <div class="stat-box"><div class="stat-big">3</div><div class="stat-lbl">Orbiting Moons</div></div>
+    <div class="stat-box"><div class="stat-big">12k</div><div class="stat-lbl">Known Species</div></div>
+    <div class="stat-box"><div class="stat-big">48km</div><div class="stat-lbl">Ocean Depth</div></div>
+  </div>
+
+  <div class="section-title">Civilizations & Lore</div>
+  <div class="section-line"></div>
+  <div class="lore-grid">
+    <div class="lore-card">
+      <div class="lore-icon">🌊</div>
+      <div class="lore-name">The Thal'Mari</div>
+      <div class="lore-text">The ancient rulers of Aqua'lon who built their cities from living coral and bioluminescent crystals. They communicate through harmonic frequencies that travel thousands of miles through the water.</div>
+    </div>
+    <div class="lore-card">
+      <div class="lore-icon">🔮</div>
+      <div class="lore-name">The Tide Codex</div>
+      <div class="lore-text">A sacred text written in patterns of bioluminescence, believed to hold the secret names of all three moons. Only the High Weavers can read it without losing their minds.</div>
+    </div>
+    <div class="lore-card">
+      <div class="lore-icon">🏛️</div>
+      <div class="lore-name">City of Lum'Ara</div>
+      <div class="lore-text">The capital city, suspended midway between the surface and the abyss. Its towers made of living sea-glass glow with the memories of a thousand generations of inhabitants.</div>
+    </div>
+    <div class="lore-card">
+      <div class="lore-icon">⚡</div>
+      <div class="lore-name">The Great Current</div>
+      <div class="lore-text">A river of pure energy that flows through the deepest trenches, said to be the heartbeat of the planet itself. Those who touch it gain visions of past and future.</div>
+    </div>
+  </div>
+
+  <div class="section-title">Known Creatures</div>
+  <div class="section-line"></div>
+  <div class="creature-strip">
+    <div class="creature-card"><span class="creature-emoji">🐋</span><div class="creature-name">Void Leviathan</div><div class="creature-desc">Gentle giants the size of mountains that sing the planet to sleep.</div></div>
+    <div class="creature-card"><span class="creature-emoji">🦑</span><div class="creature-name">Crystal Kraken</div><div class="creature-desc">Translucent hunters whose arms refract light into deadly lasers.</div></div>
+    <div class="creature-card"><span class="creature-emoji">🐬</span><div class="creature-name">Star Dolphin</div><div class="creature-desc">Intelligent guides who carry travelers between the floating cities.</div></div>
+    <div class="creature-card"><span class="creature-emoji">🦈</span><div class="creature-name">Shadow Ray</div><div class="creature-desc">Flat predators that glide like ghosts and phase through solid matter.</div></div>
+    <div class="creature-card"><span class="creature-emoji">🐙</span><div class="creature-name">Ember Octopus</div><div class="creature-desc">Miniature beings that form vast neural networks, thinking as one mind.</div></div>
+  </div>
+
+  <div class="mystery-block">
+    <div class="mystery-text">"The ocean does not remember where it began, nor does it wonder where it ends. It simply is. To be Thal'Mari is to be the ocean — boundless, ancient, alive."</div>
+    <div class="mystery-attr">— High Weaver Sel'Orin, Year of the Third Moon</div>
+  </div>
+
+</div>
+
+<script>
+// Bioluminescent particles
+(function(){
+  const colors=['#00f5ff','#0066ff','#00ff9d','#ffffff'];
+  for(let i=0;i<40;i++){
+    const b=document.createElement('div'); b.className='bio';
+    const size=Math.random()*8+2;
+    const op=(0.2+Math.random()*0.5).toFixed(2);
+    b.style.cssText=`width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};filter:blur(${size/3}px);--d:${4+Math.random()*8}s;--op:${op};--tx:${-30+Math.random()*60}px;--ty:${-30+Math.random()*60}px;animation-delay:${-Math.random()*8}s;z-index:0;pointer-events:none;position:fixed;border-radius:50%;`;
+    document.body.appendChild(b);
+  }
+})();
+
+if (!localStorage.getItem('yham_session')) window.location.href = 'index.html';
+</script>
+</body>
+</html>
