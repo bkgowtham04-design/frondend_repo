@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Fetch</title>
+</head>
+<body>
+    
+<table border="1">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+        </tr>
+    </thead>
+    <tbody id="datas">
+
+    </tbody>
+</table>
+
+
+</body>
+</html>
+
+
+
+<script>
+    const fetchData = async ()=>{
+
+   const datasget = await fetch("https://dummyjson.com/products")
+   const res = await datasget.json()
+   const save = res.products
+   let tablebody = document.getElementById("datas")
+   tablebody.innerHTML = ""
+
+
+save.forEach((user,i)=>{
+    let row = `
+    <tr>
+        <td>${i+1}</td>
+        <td>${user.title}<td>
+    </tr>
+    `
+
+    tablebody.innerHTML += row 
+});
+
+  
+}
+
+fetchData()
+</script>
