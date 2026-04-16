@@ -4,51 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DOM Fetch</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 p-5">
     
-<table border="1">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-        </tr>
-    </thead>
-    <tbody id="datas">
-
-    </tbody>
-</table>
-
+<div id="datas" class="flex flex-wrap gap-6 justify-center"></div>
 
 </body>
 </html>
 
-
-
 <script>
-    const fetchData = async ()=>{
+const fetchData = async ()=>{
 
    const datasget = await fetch("https://dummyjson.com/products")
    const res = await datasget.json()
    const save = res.products
+
    let tablebody = document.getElementById("datas")
    tablebody.innerHTML = ""
 
-
-save.forEach((user,i)=>{
+   save.forEach((user,i)=>{
     let row = `
-    <tr>
-        <td>${i+1}</td>
-        <td>${user.title}<td>
-    </tr>
+    <div class="bg-white w-60 rounded-xl shadow-md p-4 hover:shadow-xl transition">
+        <img src="${user.thumbnail}" class="w-full h-40 object-cover rounded-lg mb-3" alt="">
+        
+        <h3 class="font-bold text-lg">${user.title}</h3>
+        
+        <p class="text-gray-600 text-sm mb-1">Price: $${user.price}</p>
+        <p class="text-yellow-500">⭐ ${user.rating}</p>
+    </div>
     `
-
     tablebody.innerHTML += row 
-});
-
-  
+   });
 }
 
 fetchData()
-</script>
+</script> 
