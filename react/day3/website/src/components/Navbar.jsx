@@ -19,7 +19,7 @@ const Navbar = () =>{
              <div>
 
             
-                <img src={image} alt="" />
+                <img className='' src={image} alt="" />
 
 
                 </div>
@@ -28,7 +28,7 @@ const Navbar = () =>{
            
      <div className="child">
 
-                <a href="">Home</a> |
+                <a  href="">Home</a> |
 
                 <a href="">About us</a> |
 
@@ -53,3 +53,7 @@ const Navbar = () =>{
 
 
 export default Navbar
+
+
+
+
