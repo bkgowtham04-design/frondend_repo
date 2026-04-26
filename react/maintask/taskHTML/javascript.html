@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS</title>
+</head>
+<body>
+  <h2>JavaScript Practical</h2>
+
+<!-- 1. Remove Duplicates -->
+<button onclick="removeDuplicates()">Remove Duplicates</button>
+<p id="dupResult"></p>
+
+<!-- 2. Palindrome -->
+<input type="text" id="palInput" placeholder="Enter word">
+<button onclick="checkPalindrome()">Check Palindrome</button>
+<p id="palResult"></p>
+
+<!-- 3. Sort without sort() -->
+<button onclick="sortArray()">Sort Array</button>
+<p id="sortResult"></p>
+
+<!-- 4. Closure Counter -->
+<button onclick="counter()">Click Counter</button>
+<p id="countResult"></p>
+
+<!-- 5. Form Validation -->
+<h3>Form Validation</h3>
+<form onsubmit="return validateForm()">
+  <input type="text" id="name" placeholder="Enter Name">
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+
+// 1. Remove Duplicates
+function removeDuplicates() {
+  let arr = [1,2,2,3,4,4];
+  let unique = [...new Set(arr)];
+  document.getElementById("dupResult").innerText = unique;
+}
+
+// 2. Palindrome
+function checkPalindrome() {
+  let str = document.getElementById("palInput").value;
+  let result = str === str.split('').reverse().join('');
+  document.getElementById("palResult").innerText = result ? "Palindrome" : "Not Palindrome";
+}
+
+// 3. Sort without sort()
+function sortArray() {
+  let arr = [5,3,1,4];
+  for(let i=0;i<arr.length;i++){
+    for(let j=i+1;j<arr.length;j++){
+      if(arr[i] > arr[j]){
+        let temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+      }
+    }
+  }
+  document.getElementById("sortResult").innerText = arr;
+}
+
+// 4. Closure Counter
+let count = 0;
+function counter(){
+  count++;
+  document.getElementById("countResult").innerText = count;
+}
+
+
+// 5. Form Validation
+function validateForm(){
+  let name = document.getElementById("name").value;
+  if(name === ""){
+    alert("Name is required!");
+    return false;
+  }
+  alert("Form Submitted!");
+  return true;
+}
+
+</script>
+
+</body>
+</html>
+
+</body>
+</html>
+

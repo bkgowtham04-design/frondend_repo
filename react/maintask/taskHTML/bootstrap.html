@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+
+<div class="container my-5">
+
+  <h2 class="text-center mb-5">Bootstrap All Components</h2>
+
+  <!-- 1. Responsive Dashboard -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-3 bg-primary text-white p-4">Sidebar</div>
+    <div class="col-md-9 bg-light p-4">Main Content</div>
+  </div>
+
+  <!-- 2. Modal -->
+  <div class="text-center mb-5">
+    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#myModal">
+      Open Modal
+    </button>
+  </div>
+
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <h5>Modal Form</h5>
+        <input type="text" class="form-control my-2" placeholder="Enter name">
+        <button class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Carousel -->
+  <div id="carouselExample" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://via.placeholder.com/800x300" class="d-block w-100">
+      </div>
+      <div class="carousel-item">
+        <img src="https://via.placeholder.com/800x300/ff0000" class="d-block w-100">
+      </div>
+      <div class="carousel-item">
+        <img src="https://via.placeholder.com/800x300/00ff00" class="d-block w-100">
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Pricing Table -->
+  <div class="row g-4 text-center mb-5">
+    <div class="col-md-4">
+      <div class="border p-4 rounded">
+        <h3>Basic</h3>
+        <p>$10</p>
+        <button class="btn btn-outline-primary">Buy</button>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="border p-4 rounded">
+        <h3>Pro</h3>
+        <p>$20</p>
+        <button class="btn btn-primary">Buy</button>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="border p-4 rounded">
+        <h3>Premium</h3>
+        <p>$30</p>
+        <button class="btn btn-success">Buy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Toast -->
+  <div class="text-center">
+    <button class="btn btn-warning" onclick="showToast()">Show Toast</button>
+  </div>
+
+  <div class="toast position-fixed bottom-0 end-0 m-4" id="myToast">
+    <div class="toast-body">
+      Hello! This is a Toast Notification 🎉
+    </div>
+  </div>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+function showToast(){
+  let toast = new bootstrap.Toast(document.getElementById('myToast'));
+  toast.show();
+}
+</script>
+
+
+</body>
+</html>
+
+
+
