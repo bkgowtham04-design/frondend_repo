@@ -3,28 +3,21 @@ import React, { useState } from 'react'
 const Formhandling = () => {
 
     const [username,setUsername] = useState("")
-
-    const [usershow,setUsershow] = useState("")
+      const [useremail,setUseremail] = useState("")
+   
+  
 
     const handleing =(e) =>{
         setUsername(e.target.value)
 
-        if(username.length >= 9)
+   }
 
-            alert("ONLY 10 NUMBERS DAAA MACHA")
-
-
-
-
-    }
     const handleclick =(e)=>{
+    setUseremail()
+   }
 
-       e.preventDefault()
-
-    setUsershow(username)
-
-    }
-
+   
+    
 
 
   return (
@@ -34,13 +27,17 @@ const Formhandling = () => {
             <h1>Form Maja</h1>
             <form>
                 <input onChange={handleing} type="text" placeholder='Enter your Name'/>
+                
+
+                  <input onChange={handleclick} type="text" placeholder='Enter Your Email' />
           
-                <button onClick={handleclick}>Summit</button>
+            
 
 
             </form>
+           
 
-            <h1>{usershow}</h1>
+            <h1>{username }</h1>
         </div>
     </div>
     </>
