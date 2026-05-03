@@ -26,10 +26,10 @@ const handleclick = (e)=>{
 
     const storeArray = JSON.parse (store) || []
     
-    // Push the form data object one by one into the array
+
     storeArray.push(formData)
 
-    // Store the entire array back to localStorage
+  
     localStorage.setItem("taskList", JSON.stringify(storeArray))
 
     alert("Successfully Registered")
@@ -40,6 +40,12 @@ const handleclick = (e)=>{
 
 
 }
+
+
+
+
+
+
   return (
     <div className='min-h-screen bg-blue-500 from-blue-500 to-purple-600 flex justify-center items-center p-4'>
       <div className='bg-white rounded-lg shadow-2xl p-8 w-full max-w-md'>
