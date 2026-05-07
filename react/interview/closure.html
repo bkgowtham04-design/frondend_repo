@@ -1,0 +1,21 @@
+<script>
+   const counter = () => {
+
+    let count = 0
+
+
+    let inner = () => {
+        count++
+        console.log(count);
+    }
+
+    return inner
+
+   }
+   let count = counter()
+
+   
+   count() 
+    count()
+    count()
+</script>

@@ -1,0 +1,18 @@
+<input type="text" id="username" placeholder="Enter Name">
+<button onclick="validateForm()">Submit</button>
+
+<script>
+
+const validateForm = () => {
+
+    let name = document.getElementById("username").value;
+
+    if(name === ""){
+        alert("Name is required");
+    }else{
+        alert("Form Submitted");
+    }
+
+}
+
+</script>
