@@ -1,0 +1,27 @@
+CREATE DATABASE ELECTIONRESULT;
+
+USE ELECTIONRESULT;
+
+CREATE TABLE CONSITUTION (
+CONSITUTION_ID int primary key auto_increment,
+CONSITUTION_NAME varchar(200),
+
+
+
+
+
+);
+
+
+
+
+
+CREATE TABLE DISTRICT  (
+DISTRICT_ID int primary key auto_increment,
+DISTRICT_NAME varchar(200),
+
+
+
+);
+
+
